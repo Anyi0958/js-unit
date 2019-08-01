@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<script type="text/javascript" src="./js/lib/jquery.min.js"></script>
+<script type="text/javascript" src="https://static.daohangtx.com/static/js/jquery-3.3.1.min.js"></script>
+<style type="text/css">
+    
+    /*设置div样式的整体布局*/
+    .page-icon{
+        margin:20px 0 0 0;/*设置距离顶部20像素*/
+        font-size:0;/*修复行内元素之间空隙间隔*/
+        text-align:center;/*设置内容居中显示*/
+    }
+    
+    /*设置共有的的样式布局，主要是进行代码优化，提高运行效率*/
+    .page-icon a,.page-icon span,.page-disabled,.page-next{
+        border:1px solid #ccc;
+        border-radius:3px;
+        padding:4px 10px 5px;
+        font-size:14PX;/*修复行内元素之间空隙间隔*/
+        margin-right:10px;
+        cursor: pointer;
+        color: #005aa0;
+        text-decoration:none;/*取消链接的下划线*/
+    }
+
+    /*被选中 a 标签的页码*/
+    .page-current{
+        color:#ff6600 !important;
+        padding:4px 10px 5px;
+        font-size:14PX;/*修复行内元素之间空隙间隔*/
+        cursor: default !important;
+    }
+    /*禁用状态*/
+    .page-disabled{
+        color:#ccc !important;
+        cursor: default !important;
+    }
+
+    .hide{
+        border: 0px !important;
+    }
+</style>
+</head>
+ 
+<body>
+    <div class="page-icon" id="page-icon"></div>
+
+</body>
+</html>
+
+<script type="text/javascript">
+
+    function allPage(page,total){
+        function showPage(page,total){
+            var page = Number(page)
+            var total = Number(total)
+            $('#page-icon').html('')
+            var html=''
+            html += `<a href="javascript:;" data-page='1'  class="" style='color: #005aa0 !important;'>首页</a>`
+
+            if(total - page  == 0){
+                html += `<span href="javascript:;" data-page=${page-1} class="">上一页</span>`
+
+                html += `<a href="javascript:;" data-page=${page-2} >${page-2}</a>`
+                html += `<a href="javascript:;" data-page=${page-1} >${page-1}</a>`
+                html += `<a href="javascript:;" data-page=${page} >${page}</a>`
+
+                html += `<span href="javascript:;" data-page=0  class="page-disabled" >下一页</span>`
+            }else if(page == 1){
+                html += `<span href="javascript:;" data-page=0  class="page-disabled">上一页</span>`
+
+                html += `<a href="javascript:;" data-page=${page} >${page}</a>`
+                html += `<a href="javascript:;" data-page=${page+1} >${page+1}</a>`
+                html += `<a href="javascript:;" data-page=${page+2} >${page+2}</a>`
+
+                html += `<span href="javascript:;" data-page=${page+1} class="" >下一页</span>`
+            }else{
+                html += `<span href="javascript:;" data-page=${page-1}  class="">上一页</span>`
+
+                html += `<a href="javascript:;" data-page=${page-1} >${page-1}</a>`
+                html += `<a href="javascript:;" data-page=${page} >${page}</a>`
+                html += `<a href="javascript:;" data-page=${page+1} >${page+1}</a>`
+
+                html += `<span href="javascript:;" data-page=${page+1} class="" >下一页</span>`
+            }
+
+            
+            html += `<a href="javascript:;" data-page=${total} class=""  style='color: #005aa0 !important;'>尾页</a>`
+
+            $('#page-icon').html(html)
+
+            // 判断是否是第一页
+            if(page == 1){
+                $('span[data-page="first"]').addClass('page-disabled')
+                $('span[data-page="prev"]').addClass('page-disabled')
+            }else{
+                $('span[data-page="first"]').removeClass('page-disabled')
+                $('span[data-page="prev"]').removeClass('page-disabled')
+            }
+
+            // 判断是否是最后一页
+            if(page == total){
+                $('span[data-page="next"]').addClass('page-disabled')
+                $('span[data-page="last"]').addClass('page-disabled')
+            }else{
+                $('span[data-page="next"]').removeClass('page-disabled')
+                $('span[data-page="last"]').removeClass('page-disabled')
+            }
+
+
+            var aList = $('#page-icon a')
+            for(var x =0;x<aList.length;x++){
+                if($(aList[x]).attr('data-page') == page){
+                    $(aList[x]).addClass('page-current')
+                }else{
+                    $(aList[x]).removeClass('page-current')
+                }
+            }
+        }
+
+        showPage(page,total)
+
+        // 事件处理
+        $('#page-icon').on('click',(e)=>{
+            console.log(e.target.nodeName)
+            if(e.target.nodeName == 'SPAN'){
+                var page = $(e.target).attr('data-page')
+                if(page != 0 ){
+                    showPage(page,total)
+                }
+            }else if(e.target.nodeName == 'A'){
+                var page = $(e.target).attr('data-page')
+                showPage(page,total)
+            }
+        })
+    }
+
+    allPage(5,100)
+    
+</script>
+
+
