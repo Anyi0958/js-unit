@@ -15,7 +15,7 @@
     }
     
     /*设置共有的的样式布局，主要是进行代码优化，提高运行效率*/
-    .page-icon a,.page-icon span,.page-disabled,.page-next{
+    .page-icon a,.page-icon a,.page-disabled,.page-next{
         border:1px solid #ccc;
         border-radius:3px;
         padding:4px 10px 5px;
@@ -62,53 +62,35 @@
             html += `<a href="javascript:;" data-page='1'  class="" style='color: #005aa0 !important;'>首页</a>`
 
             if(total - page  == 0){
-                html += `<span href="javascript:;" data-page=${page-1} class="">上一页</span>`
+                html += `<a href="javascript:;" data-page=${page-1} class="">上一页</a>`
 
                 html += `<a href="javascript:;" data-page=${page-2} >${page-2}</a>`
                 html += `<a href="javascript:;" data-page=${page-1} >${page-1}</a>`
                 html += `<a href="javascript:;" data-page=${page} >${page}</a>`
 
-                html += `<span href="javascript:;" data-page=0  class="page-disabled" >下一页</span>`
+                html += `<a href="javascript:;" data-page=0  class="page-disabled" >下一页</a>`
             }else if(page == 1){
-                html += `<span href="javascript:;" data-page=0  class="page-disabled">上一页</span>`
+                html += `<a href="javascript:;" data-page=0  class="page-disabled">上一页</a>`
 
                 html += `<a href="javascript:;" data-page=${page} >${page}</a>`
                 html += `<a href="javascript:;" data-page=${page+1} >${page+1}</a>`
                 html += `<a href="javascript:;" data-page=${page+2} >${page+2}</a>`
 
-                html += `<span href="javascript:;" data-page=${page+1} class="" >下一页</span>`
+                html += `<a href="javascript:;" data-page=${page+1} class="" >下一页</a>`
             }else{
-                html += `<span href="javascript:;" data-page=${page-1}  class="">上一页</span>`
+                html += `<a href="javascript:;" data-page=${page-1}  class="">上一页</a>`
 
                 html += `<a href="javascript:;" data-page=${page-1} >${page-1}</a>`
                 html += `<a href="javascript:;" data-page=${page} >${page}</a>`
                 html += `<a href="javascript:;" data-page=${page+1} >${page+1}</a>`
 
-                html += `<span href="javascript:;" data-page=${page+1} class="" >下一页</span>`
+                html += `<a href="javascript:;" data-page=${page+1} class="" >下一页</a>`
             }
 
             
             html += `<a href="javascript:;" data-page=${total} class=""  style='color: #005aa0 !important;'>尾页</a>`
 
             $('#page-icon').html(html)
-
-            // 判断是否是第一页
-            if(page == 1){
-                $('span[data-page="first"]').addClass('page-disabled')
-                $('span[data-page="prev"]').addClass('page-disabled')
-            }else{
-                $('span[data-page="first"]').removeClass('page-disabled')
-                $('span[data-page="prev"]').removeClass('page-disabled')
-            }
-
-            // 判断是否是最后一页
-            if(page == total){
-                $('span[data-page="next"]').addClass('page-disabled')
-                $('span[data-page="last"]').addClass('page-disabled')
-            }else{
-                $('span[data-page="next"]').removeClass('page-disabled')
-                $('span[data-page="last"]').removeClass('page-disabled')
-            }
 
 
             var aList = $('#page-icon a')
@@ -125,15 +107,11 @@
 
         // 事件处理
         $('#page-icon').on('click',(e)=>{
-            console.log(e.target.nodeName)
-            if(e.target.nodeName == 'SPAN'){
-                var page = $(e.target).attr('data-page')
-                if(page != 0 ){
+            if(e.target.nodeName == 'A'){
+                if($(e.target).attr('data-page') != 0){
+                    var page = $(e.target).attr('data-page')
                     showPage(page,total)
                 }
-            }else if(e.target.nodeName == 'A'){
-                var page = $(e.target).attr('data-page')
-                showPage(page,total)
             }
         })
     }
