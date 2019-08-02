@@ -1,2 +1,5 @@
-用 jq 写的动态分页
+用 jq/js 写的一些常用的前端组件
+
+showPage         JQ 动态分页
+canvas-code      canvas 验证码
 
