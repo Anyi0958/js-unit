@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>  
+
+    <div>
+        <input type="text" name="codeText">
+        <canvas id="Canvas" width="100" height="20" >  </canvas>
+        <div>
+            <button onclick="sub()">确认</button> <button onclick="showCode()">刷新</button>
+        </div>
+    </div>
+        
+</body>
+</html>
+
+<script>
+
+    var textConent = ''
+
+    function showCode(){
+        var c = document.getElementById('Canvas')
+        var ctx = c.getContext('2d')
+
+        ctx.clearRect(0,0,100,20); 
+
+        var arr =[
+                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 
+                    'A', 'B', 'C', 'D', 'E', 'F', 
+                    'G', 'H', 'I', 'J', 'K', 'L', 
+                    'M', 'N', 'O', 'P', 'Q', 'R', 
+                    'S', 'T', 'U', 'V', 'W', 'X', 
+                    'Y', 'Z', 
+                    'a', 'b', 'c','d', 'e', 'f', 
+                    'g', 'h', 'i', 'j', 'k', 'l', 
+                    'm', 'n', 'o', 'p', 'q', 'r', 
+                    's', 't', 'u', 'v', 'w', 'x', 
+                    'y', 'z'
+                ]
+        textConent = ''
+        var textStyle = []
+        var textPlace = []
+
+        for(var i=0; i<4 ;i++){
+        textConent +=  arr[parseInt(Math.random()*62)] 
+        textStyle.push( 'rgb('+parseInt(Math.random()*255) + ',' + parseInt(Math.random()*255) + ',' + parseInt(Math.random()*255)  +')' )
+        textPlace.push( parseInt(Math.random()*5) )
+        }
+        console.log(textConent,textStyle,textPlace)
+
+        var ccc = 10
+
+        for(var x=0; x<4;x++){
+            // 绘制验证码内容
+            ctx.font = '15px Arial'
+            ctx.fillStyle =textStyle[x]
+            ctx.fillText(textConent[x],ccc,15+textPlace[x])
+
+            ccc += 20
+            // 绘制干扰线条
+            ctx.beginPath()
+            ctx.moveTo(Math.random()*100 ,Math.random()*50 )
+            ctx.lineTo(Math.random()*100 ,Math.random()*50 )
+            ctx.strokeStyle=textStyle[x]
+            ctx.stroke();
+
+            ctx.beginPath()
+            ctx.moveTo(Math.random()*100 ,Math.random()*50 )
+            ctx.lineTo(Math.random()*100 ,Math.random()*50 )
+            ctx.strokeStyle=textStyle[x]
+            ctx.stroke();
+        }
+
+    }
+
+    showCode()
+
+    function sub(){
+        var code = document.getElementsByName('codeText')[0]
+        console.log(textConent,code.value)
+        if(code.value.toUpperCase() == textConent.toUpperCase()){
+            alert('正确')
+        }else{
+            alert(textConent)
+        }
+        code.value=''
+        showCode()
+    }
+        
+</script>
