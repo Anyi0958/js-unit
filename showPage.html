@@ -46,12 +46,10 @@
 </head>
  
 <body>
-    
     <div class="page-icon" id="page-icon" > </div>
 
 </body>
 </html>
-?:
 <script type="text/javascript">
 
 var showPage =function(page,total){
@@ -74,46 +72,46 @@ var showPage =function(page,total){
         </a>
 
         <a 
-            href="moguim://moguim/:page?<%= page==1 ? 0 : page-1 %>"  
-            data-page=<%= page==1 ? 0 : page-1 %>
-            class="<%= page==1 ? 'page-disabled' : '' %>" 
+            href="moguim://moguim/:page?${ page==1 ? 0 : page-1 }"  
+            data-page=${ page==1 ? 0 : page-1 }
+            class="${ page==1 ? 'page-disabled' : '' }" 
         >
             上一页
         </a>
 
         <a 
-            href="moguim://moguim/:page?<%= page==1 ? page : total-page==0 ? page-2 : page-1 %> " 
-            data-page=<%= page==1 ? page : total-page==0 ? page-2 : page-1 %> 
+            href="moguim://moguim/:page?${ page==1 ? page : total-page==0 ? page-2 : page-1 } " 
+            data-page=${ page==1 ? page : total-page==0 ? page-2 : page-1 } 
             
         > 
-            <%= page==1 ? page : total-page==0 ? page-2 : page-1 %>
+            ${ page==1 ? page : total-page==0 ? page-2 : page-1 }
         </a>
 
         <a 
-            href="moguim://moguim/:page?<%= page==1 ? page+1 : total-page==0 ? page-1 : page %> " 
-            data-page=<%= page==1 ? page+1 : total-page==0 ? page-1 : page %> 
+            href="moguim://moguim/:page?${ page==1 ? page+1 : total-page==0 ? page-1 : page } " 
+            data-page=${ page==1 ? page+1 : total-page==0 ? page-1 : page } 
         > 
-            <%= page==1 ? page+1 : total-page==0 ? page-1 : page %>
+            ${ page==1 ? page+1 : total-page==0 ? page-1 : page }
         </a>
 
         <a 
-            href="moguim://moguim/:page?<%= page==1 ? page+2 : total-page==0 ? page : page+1 %> "  
-            data-page=<%= page==1 ? page+2 : total-page==0 ? page : page+1 %> 
+            href="moguim://moguim/:page?${ page==1 ? page+2 : total-page==0 ? page : page+1 } "  
+            data-page=${ page==1 ? page+2 : total-page==0 ? page : page+1 } 
         > 
-            <%= page==1 ? page+2 : total-page==0 ? page : page+1 %>
+            ${ page==1 ? page+2 : total-page==0 ? page : page+1 }
         </a>
 
         <a 
-            href="moguim://moguim/:page?<%= page==total ? 0 : page+1 %> "   
-            data-page=<%= page==total ? 0 : page+1 %>  
-            class="<%= page==total ? 'page-disabled' : '' %>" 
+            href="moguim://moguim/:page?${ page==total ? 0 : page+1 } "   
+            data-page=${ page==total ? 0 : page+1 }  
+            class="${ page==total ? 'page-disabled' : '' }" 
         >
             下一页
         </a>
 
         <a 
-            href="moguim://moguim/:page?<%= total  %> "  
-            data-page=<%= total  %>
+            href="moguim://moguim/:page?${ total  } "  
+            data-page=${ total  }
             class=""  
             style='color: #005aa0 !important;'
         >
@@ -138,7 +136,9 @@ var showPage =function(page,total){
         }
     }
 };
-    showPage(5,5)
+    
+showPage(5,15)
+    
 </script>
 
 
