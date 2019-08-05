@@ -46,85 +46,24 @@
 </head>
  
 <body>
-    <div class="page-icon" id="page-icon"></div>
+    
+    <div class="page-icon" id="page-icon" > </div>
 
 </body>
 </html>
-
+?:
 <script type="text/javascript">
 
-    function allPage(page,total){
-        function showPage(page,total){
-            var page = Number(page)
-            var total = Number(total)
-            $('#page-icon').html('')
-            var html=''
-            html += `<a href="javascript:;" data-page='1'  class="" style='color: #005aa0 !important;'>首页</a>`
+var showPage =function(page,total){
+    var html='';
 
-            if(total - page  == 0){
-                html += `<a href="javascript:;" data-page=${page-1} class="">上一页</a>`
-
-                html += `<a href="javascript:;" data-page=${page-2} >${page-2}</a>`
-                html += `<a href="javascript:;" data-page=${page-1} >${page-1}</a>`
-                html += `<a href="javascript:;" data-page=${page} >${page}</a>`
-
-                html += `<a href="javascript:;" data-page=0  class="page-disabled" >下一页</a>`
-            }else if(page == 1){
-                html += `<a href="javascript:;" data-page=0  class="page-disabled">上一页</a>`
-
-                html += `<a href="javascript:;" data-page=${page} >${page}</a>`
-                html += `<a href="javascript:;" data-page=${page+1} >${page+1}</a>`
-                html += `<a href="javascript:;" data-page=${page+2} >${page+2}</a>`
-
-                html += `<a href="javascript:;" data-page=${page+1} class="" >下一页</a>`
-            }else{
-                html += `<a href="javascript:;" data-page=${page-1}  class="">上一页</a>`
-
-                html += `<a href="javascript:;" data-page=${page-1} >${page-1}</a>`
-                html += `<a href="javascript:;" data-page=${page} >${page}</a>`
-                html += `<a href="javascript:;" data-page=${page+1} >${page+1}</a>`
-
-                html += `<a href="javascript:;" data-page=${page+1} class="" >下一页</a>`
-            }
-
-            
-            html += `<a href="javascript:;" data-page=${total} class=""  style='color: #005aa0 !important;'>尾页</a>`
-
-            $('#page-icon').html(html)
-
-
-            var aList = $('#page-icon a')
-            for(var x =0;x<aList.length;x++){
-                if($(aList[x]).attr('data-page') == page){
-                    $(aList[x]).addClass('page-current')
-                }else{
-                    $(aList[x]).removeClass('page-current')
-                }
-            }
+    // 页码小于8的情况
+    if(Number(total)<8){
+        for(var x=0; x<total; x++){
+            html+=`<a href=moguim://moguim/:page?${x+1} data-page=${x+1} > ${x+1} </a>`
         }
-
-        showPage(page,total)
-
-        // 事件处理
-        $('#page-icon').on('click',(e)=>{
-            if(e.target.nodeName == 'A'){
-                if($(e.target).attr('data-page') != 0){
-                    var page = $(e.target).attr('data-page')
-                    showPage(page,total)
-                }
-            }
-        })
-    }
-
-    allPage(5,100)
-    
-</script>
-
-<script>
-//动态模板
-    /*
-    <div class="page-icon" id="page-icon" >
-
+    }else{
+        html += `
         <a 
             href="moguim://moguim/:page?1" 
             data-page=1  
@@ -145,15 +84,18 @@
         <a 
             href="moguim://moguim/:page?<%= page==1 ? page : total-page==0 ? page-2 : page-1 %> " 
             data-page=<%= page==1 ? page : total-page==0 ? page-2 : page-1 %> 
+            
         > 
             <%= page==1 ? page : total-page==0 ? page-2 : page-1 %>
         </a>
+
         <a 
             href="moguim://moguim/:page?<%= page==1 ? page+1 : total-page==0 ? page-1 : page %> " 
             data-page=<%= page==1 ? page+1 : total-page==0 ? page-1 : page %> 
         > 
             <%= page==1 ? page+1 : total-page==0 ? page-1 : page %>
         </a>
+
         <a 
             href="moguim://moguim/:page?<%= page==1 ? page+2 : total-page==0 ? page : page+1 %> "  
             data-page=<%= page==1 ? page+2 : total-page==0 ? page : page+1 %> 
@@ -177,8 +119,26 @@
         >
             尾页
         </a>
-    </div>
-   */
+
+        `
+    }
+
+    $('#page-icon').html( html )
+
+    var aList = $('#page-icon a');
+    for(var x =0;x<aList.length;x++)
+    {
+        if($(aList[x]).attr('data-page') == page)
+        {
+            $(aList[x]).addClass('page-current')
+        }
+        else
+        {
+            $(aList[x]).removeClass('page-current')
+        }
+    }
+};
+    showPage(5,5)
 </script>
 
 
